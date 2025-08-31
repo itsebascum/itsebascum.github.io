@@ -204,9 +204,13 @@
       color: rgba(255,255,255,0.92);
       font-size: 1rem;
       font-weight: 600;
-      text-decoration: none;
+      text-decoration: none; /* <- aquí subraya el texto */
       box-shadow: 0 6px 12px rgba(0,0,0,0.55);
       transition: transform 0.14s;
+    }
+
+    .add-song-chip span {
+      text-decoration: underline;
     }
 
     .add-song-chip:hover {
@@ -281,7 +285,7 @@
         <!-- Botón Agrega rolas -->
         <div style="text-align:center; margin-top:10px;">
           <a href="https://open.spotify.com/playlist/7iPobvH75kfLbg5UgxStDU?si=68f60ecb78da47a8&pt=2bee585d528235c7acf9b361648c74bc" target="_blank" class="add-song-chip">
-            Agrega rolas aquí 😘
+            <span>Agrega rolas aquí</span> 😘
           </a>
         </div>
 
