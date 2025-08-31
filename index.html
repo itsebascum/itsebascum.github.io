@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1: #141216;       
+      --bg1: #1F1F1F;       
       --accent: #AC82E9;    
       --accent-2: #d8cab8;
       --accent-3: #fcb167;
@@ -99,7 +99,7 @@
       transform: translateY(-50%);
       font-size: 0.7rem;
       font-weight:700;
-      color: #141216;
+      color: #1F1F1F;
       background: #AC82E9;
       padding: 6px 10px;
       border-radius: 10px;
@@ -171,22 +171,22 @@
 
     .cal-btn {
       display: inline-block;
-      background: #141216;
+      background:#1F1F1F;
       color: rgba(255,255,255,0.92);
       font-weight: 700;
-      padding: 8px 14px;
+      padding: 14px 22px;
       border-radius: 10px;
       text-decoration: none;
       box-shadow: 0 6px 14px rgba(16,16,16,0.55);
       cursor: pointer;
       margin: 4px 0 8px;
-      font-size: 0.95rem;
+      font-size: 1.0rem;
     }
     .location-chip {
       display:inline-block;
       padding:8px 12px;
       border-radius:12px;
-      background:#141216;
+      background:#1F1F1F;
       color:rgba(255,255,255,0.92);
       font-size:0.88rem;
       font-weight:600;
@@ -195,7 +195,23 @@
       transition:transform 0.14s;
     }
     .location-chip:hover{ transform:scale(1.03); }
+    
+    .add-song-chip {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: #1F1F1F;
+      color: rgba(255,255,255,0.92);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.55);
+      transition: transform 0.14s;
+    }
 
+    .add-song-chip:hover {
+      transform: scale(1.03);
+    }
     @media (max-width:720px){
       .card{padding:14px}
       .collage{height:300px}
@@ -261,6 +277,13 @@
           loading="lazy"
           allowfullscreen>
         </iframe>
+
+        <!-- Botón Agrega rolas -->
+        <div style="text-align:center; margin-top:10px;">
+          <a href="https://open.spotify.com/playlist/7iPobvH75kfLbg5UgxStDU?si=68f60ecb78da47a8&pt=2bee585d528235c7acf9b361648c74bc" target="_blank" class="add-song-chip">
+            Agrega rolas aquí 😘
+          </a>
+        </div>
 
         <!-- RSVP -->
         <div style="text-align:center; margin:10px 0 6px;">
