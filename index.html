@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Invitación - Cumple Sebs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #141216;       
+      --accent: #AC82E9;    
+      --accent-2: #d8cab8;
+      --accent-3: #fcb167;
+      --glass: rgba(255,255,255,0.06);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 5%),
+                  radial-gradient(circle at 90% 80%, rgba(255,255,255,0.02), transparent 10%);
+      color: rgba(255,255,255,0.92);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:20px;
+      background-color: var(--bg1);
+      overflow-y:auto;
+      gap:14px;
+    }
+
+    .bg-gradient{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 35%, var(--accent-3) 70%);
+      filter: blur(48px) saturate(110%);
+      transform: translateZ(0);
+      transition: background 1200ms linear;
+    }
+
+    /* HEADER DESTACADO: gradiente + glow + ribbon */
+    .page-header{
+      --hdr-radius: 16px;
+      position: relative;
+      max-width: 920px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 18px 20px;
+      border-radius: var(--hdr-radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.6),
+        0 0 28px rgba(0,0,0,0.25) inset;
+      border: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 20;
+      transform-origin: center;
+    }
+
+    .page-header__text{
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      text-align: center;
+      color: #ffffff; /* texto sólido */
+      text-shadow: 
+        0 4px 18px rgba(0,0,0,0.6),
+        0 0 28px rgba(172,130,233,0.22); /* glow */
+      padding: 4px 8px;
+      /* eliminar estas propiedades para que no sea transparente */
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+
+
+    @keyframes hdr-pulse {
+      0%,100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0 rgba(172,130,233,0.0)); }
+      50% { transform: translateY(-2px) scale(1.005); filter: drop-shadow(0 10px 28px rgba(172,130,233,0.08)); }
+    }
+    .page-header:hover { animation: hdr-pulse 1200ms ease-in-out 1; }
+
+    .page-header::before{
+      content: "INVITACIÓN";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      font-weight:700;
+      color: #141216;
+      background: #AC82E9;
+      padding: 6px 10px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(16,16,16,0.5);
+      letter-spacing: 0.02em;
+    }
+    
+    @media (max-width:720px){
+      .page-header__text{ font-size:1.05rem; }
+      .page-header::before{ left:10px; padding:5px 8px; font-size:0.65rem; }
+    }
+
+    .card{
+      width:100%;
+      max-width:920px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: calc(var(--radius) + 6px);
+      padding:20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px) saturate(110%);
+      transform: translateY(6px);
+      transition: transform 360ms cubic-bezier(.2,.8,.2,1), opacity 360ms;
+      opacity:0;
+    }
+    .card.show { transform: translateY(0); opacity:1; }
+
+    .card header {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .title{ font-weight:700; font-size:1.4rem; margin:0; }
+    .subtitle{ font-weight:300; opacity:0.9; margin:4px 0 0; font-size:0.9rem }
+
+    .collage-wrap{ margin:6px 0 10px; display:flex; justify-content:center; }
+    .collage{ width:100%; max-width:760px; height:320px; position:relative; border-radius:12px; overflow:visible; display:block; }
+    .collage img{
+      position:absolute; width:36%; height:auto; max-width:220px; border-radius:12px; object-fit:cover;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border:3px solid rgba(255,255,255,0.04);
+      transition: transform .28s ease, box-shadow .28s ease;
+      cursor:pointer;
+    }
+    .collage img:hover{transform:scale(1.05) rotate(var(--r,0deg)); box-shadow:0 18px 40px rgba(0,0,0,0.65)}
+
+    .info{ display:flex; flex-direction:column; gap:6px; align-items:center; margin-top:6px; }
+    .datetime{ font-weight:700; font-size:0.98rem; color:rgba(255,255,255,0.95); text-align:center; }
+    .datetime .loc{ display:block; font-weight:600; font-size:0.88rem; color:rgba(255,255,255,0.9); margin-top:8px; }
+
+    .playlist {
+      margin-top: 8px;
+      display: grid;
+      gap: 4px;
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .spotify-container {
+      width: 100%;
+      max-width: 760px;
+      margin: 8px auto 4px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .spotify-container iframe{ border-radius:10px; width:100%; height:352px; border:0; }
+
+    .cal-btn {
+      display: inline-block;
+      background: #141216;
+      color: rgba(255,255,255,0.92);
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 6px 14px rgba(16,16,16,0.55);
+      cursor: pointer;
+      margin: 4px 0 8px;
+      font-size: 0.95rem;
+    }
+    .location-chip {
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:12px;
+      background:#141216;
+      color:rgba(255,255,255,0.92);
+      font-size:0.88rem;
+      font-weight:600;
+      text-decoration:none;
+      box-shadow:0 6px 12px rgba(0,0,0,0.55);
+      transition:transform 0.14s;
+    }
+    .location-chip:hover{ transform:scale(1.03); }
+
+    @media (max-width:720px){
+      .card{padding:14px}
+      .collage{height:300px}
+      .collage img{width:44%}
+      .title{font-size:1.15rem}
+      .cal-btn { margin: 6px 0 6px; }
+      .spotify-container iframe { height: 180px; }
+      .spotify-container { margin: 6px auto 4px; max-width: 100%; }
+      .playlist { gap: 4px; }
+    }
+
+    .modal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); z-index:60; opacity:0; pointer-events:none; transition:opacity .2s ease}
+    .modal.open{opacity:1; pointer-events:auto}
+    .modal img{max-width:92%; max-height:84%; border-radius:12px; box-shadow:0 40px 120px rgba(0,0,0,0.9)}
+  </style>
+</head>
+<body>
+
+  <div class="bg-gradient" id="bg"></div>
+
+  <!-- Header destacado -->
+  <div class="page-header">
+  <span class="page-header__text">Cumple-Sebas 22</span>
+  <span class="page-header__emoji">👻</span>
+  </div>
+
+  <main class="card">
+    <header>
+      <div class="title">Picnic x mi cumple 👀</div>
+      <div class="subtitle">Algo tranqui con puros close, habrá pastelito, chucherías y lo que gusten traer es bienvenido. 🫵</div>
+    </header>
+
+    <!-- Collage -->
+    <section class="collage-wrap">
+      <div class="collage" id="collage" aria-hidden="false"></div>
+    </section>
+
+    <!-- Info -->
+    <section class="info">
+      <div class="datetime" id="datetime">
+        20 de septiembre de 2025 — <strong>12:00 PM</strong>
+        <div class="loc">
+          <a id="locationLink" class="location-chip" href="https://maps.app.goo.gl/DcSf4U6E2rJcRw4P8" target="_blank">
+            📍 2da Sección Chapultepec x Metro Constituyentes - Clickéame bb
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Playlist + calendario + RSVP -->
+    <section class="playlist">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:600">Agrega lo que quieras al playlist, es lo que va a sonar de fondo ese día 💋</div>
+      </div>
+      <div class="spotify-container" style="max-width:760px; margin:8px auto 0;">
+        <iframe
+          style="border-radius:12px; display:block;"
+          src="https://open.spotify.com/embed/playlist/7iPobvH75kfLbg5UgxStDU?utm_source=generator&theme=0"
+          width="100%"
+          height="280"
+          frameBorder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+
+        <!-- RSVP -->
+        <div style="text-align:center; margin:10px 0 6px;">
+          <div style="font-weight:700; color:rgba(255,255,255,0.95); margin-bottom:8px;">
+            Confirma tu asistencia plss. 👅
+          </div>
+        </div>
+
+        <!-- Calendario -->
+        <div style="text-align:center; margin-top:6px;">
+          <a id="calBtn" class="cal-btn" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Sebas-Cum+👻&dates=20250920T120000/20250920T140000&details=Vamos+a+celebrar+el+cumple+de+Sebs&location=2da+Sección+Chapultepec&sf=true&output=xml" target="_blank">
+            Guardar en calendario 📅
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal"><img src="" alt=""></div>
+
+  <script>
+    /* CONFIG */
+    const CONFIG = {
+      images: [
+        'images/cat.gif',
+        'images/lol2.jpeg',
+        'images/yo3.jpeg',
+        'images/yo2.jpeg'
+      ],
+      palette: [
+        ['#AC82E9','#141216','#AC82E9','#141216'],
+        ['#141216','#AC82E9','#141216','#AC82E9']
+      ],
+      colorChangeInterval: 4000
+    };
+
+    /* Background cycling */
+    const bgEl = document.getElementById('bg');
+    let paletteIndex = 0;
+    function applyPalette(i){
+      const p = CONFIG.palette[i % CONFIG.palette.length];
+      document.documentElement.style.setProperty('--accent', p[0]);
+      document.documentElement.style.setProperty('--bg1', p[1]);
+      document.documentElement.style.setProperty('--accent-2', p[2]);
+      document.documentElement.style.setProperty('--accent-3', p[3]);
+      if (bgEl) bgEl.style.background = `linear-gradient(120deg, ${p[0]} 0%, ${p[2]} 35%, ${p[3]} 70%)`;
+    }
+    applyPalette(0);
+    setInterval(()=>{ paletteIndex++; applyPalette(paletteIndex); }, CONFIG.colorChangeInterval);
+
+    /* Collage wiring (z-index según cercanía al centro) */
+    const collage = document.getElementById('collage');
+    function buildCollage(){
+      if(!collage) return;
+      collage.innerHTML = '';
+      const imgs = CONFIG.images;
+      const placements = [
+        {left:'2%', top:'6%', r:-8},
+        {right:'4%', top:'8%', r:6},
+        {left:'18%', bottom:'6%', r:-4},
+        {right:'20%', bottom:'2%', r:10}
+      ];
+      const nodes = [];
+      for(let i=0;i<Math.min(imgs.length,8);i++){
+        const img = document.createElement('img');
+        img.src = imgs[i%imgs.length];
+        img.alt = `foto-${i+1}`;
+        const p = placements[i % placements.length];
+        for(const k in p){ if(k!=='r') img.style[k]=p[k]; }
+        img.style.setProperty('--r', (p.r||0)+'deg');
+        const parsePct = v => (typeof v==='string' && v.endsWith('%')) ? parseFloat(v) : NaN;
+        let cx = !isNaN(parsePct(p.left))?parsePct(p.left):(!isNaN(parsePct(p.right))?100-parsePct(p.right):50);
+        let cy = !isNaN(parsePct(p.top))?parsePct(p.top):(!isNaN(parsePct(p.bottom))?100-parsePct(p.bottom):50);
+        const dx=cx-50, dy=cy-50, dist=Math.sqrt(dx*dx+dy*dy);
+        nodes.push({el: img, dist});
+        img.addEventListener('click', ()=>openModal(img.src));
+      }
+      nodes.sort((a,b)=> a.dist - b.dist);
+      const baseZ=10;
+      for(let i=0;i<nodes.length;i++){
+        nodes[i].el.style.zIndex = baseZ + (nodes.length-i);
+        collage.appendChild(nodes[i].el);
+      }
+    }
+    buildCollage();
+
+    /* Lightbox */
+    const modal = document.getElementById('modal');
+    const modalImg = modal?.querySelector('img');
+    function openModal(src){ if(modalImg){ modalImg.src = src; modal.classList.add('open'); } }
+    modal?.addEventListener('click', ()=>{ if(modal){ modal.classList.remove('open'); modalImg.src=''; } });
+
+    /* Mostrar card */
+    requestAnimationFrame(()=>{ document.querySelector('.card')?.classList.add('show'); });
+  </script>
+</body>
+</html>
